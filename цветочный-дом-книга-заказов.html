@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Цветочный Дом — Книга заказов</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Marck+Script&family=Cormorant+Garamond:wght@500;600&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+--paper:#fffafc;
+--paper-dark:#f7f4ea;
+--pastel-pink:#fde8ed;
+--pastel-cream:#fff8ee;
+--pastel-mint:#e8f4f0;
+--ink:#4a4030;
+--ink-soft:#7a7060;
+--forest:#4a6b57;
+--forest-deep:#3a5643;
+--rose:#c17685;
+--gold:#b3924a;
+--line:#ebdccb;
+--sticky:#fff3b0;
+--sticky-shadow:#e6c86e;
+}
+html{
+background:#fff7f9;
+}
+*{ box-sizing:border-box; }
+body{
+margin:0;
+min-height:100vh;
+background:
+radial-gradient(circle at top left, var(--pastel-pink) 0%, transparent 50%),
+radial-gradient(circle at bottom right, var(--pastel-mint) 0%, transparent 50%),
+linear-gradient(135deg, #fff7f9 0%, #fffbf0 50%, #f4fbf8 100%);
+color:var(--ink);
+font-family:'PT Serif', serif;
+line-height:1.5;
+}
+.page{
+position:relative;
+}
+.page::before{
+content:"";
+position:absolute;
+inset:0;
+pointer-events:none;
+opacity:0.45;
+background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><g fill='none' stroke='%23e8b4be' stroke-width='1.4'><g transform='translate(30,35)'><circle r='5' cy='-13'/><circle r='5' cy='13'/><circle r='5' cx='-13'/><circle r='5' cx='13'/><circle r='5' cx='9' cy='-9'/><circle r='5' cx='-9' cy='9'/><circle r='5' cx='9' cy='9'/><circle r='5' cx='-9' cy='-9'/><circle r='3.4' fill='%23e8b4be' stroke='none'/></g><g transform='translate(150,120) scale(0.8)'><circle r='5' cy='-13'/><circle r='5' cy='13'/><circle r='5' cx='-13'/><circle r='5' cx='13'/><circle r='5' cx='9' cy='-9'/><circle r='5' cx='-9' cy='9'/><circle r='5' cx='9' cy='9'/><circle r='5' cx='-9' cy='-9'/><circle r='3.4' fill='%23e8b4be' stroke='none'/></g><path d='M60,150 C65,130 55,120 60,100' stroke='%23a3c9b6'/><path d='M170,40 C175,60 165,70 170,90' stroke='%23a3c9b6'/><circle cx='190' cy='180' r='4' fill='%23f2d896' stroke='none'/><circle cx='20' cy='190' r='3' fill='%23f2d896' stroke='none'/><circle cx='100' cy='60' r='3' fill='%23f2d896' stroke='none'/></g></svg>");
+background-repeat:repeat;
+background-size:220px 220px;
+z-index:0;
+}
+.page > *{
+position:relative;
+z-index:1;
+}
+.page{
+max-width:640px;
+margin:0 auto;
+padding:0 0 100px;
+}
+header{
+padding:56px 32px 36px;
+text-align:center;
+border-bottom:2px solid var(--forest);
+position:relative;
+}
+header::before, header::after{
+content:"❧";
+color:var(--gold);
+font-size:22px;
+display:block;
+margin-bottom:10px;
+}
+.shop-name{
+font-family:'Cormorant Garamond', serif;
+font-weight:600;
+font-size:44px;
+letter-spacing:0.5px;
+color:var(--forest-deep);
+margin:0;
+}
+.shop-sub{
+margin-top:10px;
+font-style:italic;
+color:var(--ink-soft);
+font-size:15px;
+}
+.book-title{
+text-align:center;
+font-family:'Cormorant Garamond', serif;
+font-size:20px;
+color:var(--rose);
+letter-spacing:2px;
+margin:26px 0 4px;
+}
+.book-title span{
+display:block;
+font-family:'PT Serif', serif;
+font-size:13px;
+letter-spacing:1px;
+color:var(--ink-soft);
+margin-top:4px;
+}
+.month{
+margin:34px 32px 0;
+}
+.month-label{
+font-family:'Cormorant Garamond', serif;
+font-size:24px;
+color:var(--forest);
+border-bottom:1px solid var(--line);
+padding-bottom:6px;
+margin-bottom:14px;
+display:flex;
+align-items:baseline;
+justify-content:space-between;
+}
+.month-label .num{
+font-size:13px;
+color:var(--ink-soft);
+font-family:'PT Serif', serif;
+font-style:italic;
+}
+.entry{
+display:grid;
+grid-template-columns:52px 1fr;
+gap:14px;
+padding:12px 0;
+border-bottom:1px dashed var(--line);
+}
+.entry:last-child{ border-bottom:none; }
+.entry .date{
+font-family:'Cormorant Garamond', serif;
+font-size:26px;
+color:var(--gold);
+line-height:1.1;
+padding-top:2px;
+}
+.entry .details{
+min-width:0;
+}
+.entry .name{
+font-weight:700;
+font-size:16.5px;
+color:var(--ink);
+}
+.entry.regular{
+background:linear-gradient(90deg, rgba(247, 215, 222, 0.45), rgba(255, 245, 235, 0.2) 80%);
+border-radius:4px;
+padding-left:8px;
+padding-right:8px;
+margin-left:-8px;
+margin-right:-8px;
+}
+.entry.regular .name{
+color:var(--rose);
+}
+.entry.regular .name::after{
+content:"— постоянный клиент (단골 고객)";
+font-family:'PT Serif', serif;
+font-weight:400;
+font-style:italic;
+font-size:12px;
+color:var(--ink-soft);
+margin-left:8px;
+}
+.entry .order{
+font-size:14px;
+color:var(--ink-soft);
+margin-top:3px;
+}
+.entry .addr{
+font-size:13px;
+color:var(--forest);
+margin-top:2px;
+}
+.entry .addr::before{
+content:"⚘ ";
+color:var(--gold);
+}
+.kr{
+display:block;
+font-size:11px;
+color:#9a8f7a;
+font-family:'PT Serif', serif;
+font-style:normal;
+margin-top:1px;
+}
+.shop-name-kr{
+display:block;
+font-size:15px;
+font-family:'PT Serif', serif;
+color:var(--ink-soft);
+font-weight:400;
+margin-top:4px;
+}
+.shop-sub-kr{
+margin-top:2px;
+font-size:12px;
+color:#9a8f7a;
+}
+.book-title-kr{
+font-size:11px;
+letter-spacing:0.5px;
+color:#9a8f7a;
+margin-top:2px;
+display:block;
+}
+footer.close .kr{
+margin-top:4px;
+}
+footer.close{
+text-align:center;
+margin-top:56px;
+padding:0 32px;
+color:var(--ink-soft);
+font-style:italic;
+font-size:14px;
+}
+/* sticky note */
+.sticky-wrap{
+display:flex;
+justify-content:center;
+margin:70px 0 20px;
+}
+.sticky{
+position:relative;
+width:280px;
+background:var(--sticky);
+box-shadow:0 10px 18px rgba(51,43,34,0.18), 0 2px 0 var(--sticky-shadow) inset;
+padding:26px 22px 30px;
+transform:rotate(-3deg);
+font-family:'Gaegu', cursive;
+font-size:20px;
+font-weight:700;
+color:#4a3f16;
+line-height:1.6;
+}
+.sticky .tape{
+position:absolute;
+top:-14px;
+left:50%;
+transform:translateX(-50%) rotate(-2deg);
+width:90px;
+height:26px;
+background:rgba(255,255,255,0.7);
+border:1px solid rgba(255,255,255,0.8);
+}
+.sticky .sign{
+display:block;
+text-align:right;
+margin-top:10px;
+font-size:18px;
+}
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+<h1 class="shop-name">Цветочный Дом<span class="shop-name-kr">꽃집</span></h1>
+<p class="shop-sub">Санкт-Петербург · свежие цветы каждый день<span class="shop-sub-kr">상트페테르부르크 · 매일 신선한 꽃</span></p>
+</header>
+<div class="book-title">Книга заказов<span class="book-title-kr">주문 장부</span><span>ежемесячные и разовые доставки</span><span class="book-title-kr">월간 및 1회성 배송</span></div>
+<!-- Январь -->
+<div class="month">
+<div class="month-label">January <span class="num">01</span></div>
+<div class="entry regular">
+<div class="date">05</div>
+<div class="details">
+<div class="name">Олеандр Карпов</div>
+<div class="order">Букет белых пионов и эвкалипта<span class="kr">흰 작약과 유칼립투스 꽃다발</span></div>
+<div class="addr">Санкт-Петербург, наб. реки Мойки, 48<span class="kr">상트페테르부르크, 모이카 강변로 48</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">12</div>
+<div class="details">
+<div class="name">Анастасия Волкова</div>
+<div class="order">Тюльпаны, 25 шт., розовые<span class="kr">분홍 튤립 25송이</span></div>
+<div class="addr">Санкт-Петербург, Каменноостровский пр., 15<span class="kr">상트페테르부르크, 카멘노스트롭스키 대로 15</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">27</div>
+<div class="details">
+<div class="name">Дмитрий Соколов</div>
+<div class="order">Композиция из ирисов и лаванды<span class="kr">아이리스와 라벤더 장식</span></div>
+<div class="addr">Санкт-Петербург, ул. Марата, 9<span class="kr">상트페테르부르크, 마라타 거리 9</span></div>
+</div>
+</div>
+</div>
+<!-- Февраль -->
+<div class="month">
+<div class="month-label">February <span class="num">02</span></div>
+<div class="entry regular">
+<div class="date">05</div>
+<div class="details">
+<div class="name">Олеандр Карпов</div>
+<div class="order">Букет белых пионов и эвкалипта<span class="kr">흰 작약과 유칼립투스 꽃다발</span></div>
+<div class="addr">Санкт-Петербург, наб. реки Мойки, 48<span class="kr">상트페테르부르크, 모이카 강변로 48</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">14</div>
+<div class="details">
+<div class="name">Мария Кузнецова</div>
+<div class="order">Красные розы, 15 шт.<span class="kr">빨간 장미 15송이</span></div>
+<div class="addr">Санкт-Петербург, Литейный пр., 33<span class="kr">상트페테르부르크, 리테이니 대로 33</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">21</div>
+<div class="details">
+<div class="name">Сергей Лебедев</div>
+<div class="order">Хризантемы и гортензии<span class="kr">국화와 수국</span></div>
+<div class="addr">Санкт-Петербург, Загородный пр., 7<span class="kr">상트페테르부르크, 자고로드니 대로 7</span></div>
+</div>
+</div>
+</div>
+<!-- Март -->
+<div class="month">
+<div class="month-label">March <span class="num">03</span></div>
+<div class="entry regular">
+<div class="date">05</div>
+<div class="details">
+<div class="name">Олеандр Карпов</div>
+<div class="order">Букет белых пионов и эвкалипта<span class="kr">흰 작약과 유칼립투스 꽃다발</span></div>
+<div class="addr">Санкт-Петербург, наб. реки Мойки, 48<span class="kr">상트페테르부르크, 모이카 강변로 48</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">08</div>
+<div class="details">
+<div class="name">Екатерина Смирнова</div>
+<div class="order">Мимоза и тюльпаны<span class="kr">미모사와 튤립</span></div>
+<div class="addr">Санкт-Петербург, Большой пр. П.С., 61<span class="kr">상트페테르부르크, 페트로그라드 지구 볼쇼이 대로 61</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">19</div>
+<div class="details">
+<div class="name">Павел Орлов</div>
+<div class="order">Орхидеи в горшке<span class="kr">화분에 심은 난초</span></div>
+<div class="addr">Санкт-Петербург, ул. Рубинштейна, 2<span class="kr">상트페테르부르크, 루빈시테인 거리 2</span></div>
+</div>
+</div>
+</div>
+<!-- Апрель -->
+<div class="month">
+<div class="month-label">April <span class="num">04</span></div>
+<div class="entry regular">
+<div class="date">05</div>
+<div class="details">
+<div class="name">Олеандр Карпов</div>
+<div class="order">Букет белых пионов и эвкалипта<span class="kr">흰 작약과 유칼립투스 꽃다발</span></div>
+<div class="addr">Санкт-Петербург, наб. реки Мойки, 48<span class="kr">상트페테르부르크, 모이카 강변로 48</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">11</div>
+<div class="details">
+<div class="name">Ольга Никитина</div>
+<div class="order">Ромашки полевые, большая охапка<span class="kr">들국화 큰 다발</span></div>
+<div class="addr">Санкт-Петербург, ул. Восстания, 18<span class="kr">상트페테르부르크, 보스스타니야 거리 18</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">23</div>
+<div class="details">
+<div class="name">Артём Комаров</div>
+<div class="order">Розы и лилии, смешанный букет<span class="kr">장미와 백합 혼합 꽃다발</span></div>
+<div class="addr">Санкт-Петербург, Английская наб., 12<span class="kr">상트페테르부르크, 영국인 강변로 12</span></div>
+</div>
+</div>
+</div>
+<!-- Май -->
+<div class="month">
+<div class="month-label">May <span class="num">05</span></div>
+<div class="entry regular">
+<div class="date">05</div>
+<div class="details">
+<div class="name">Олеандр Карпов</div>
+<div class="order">Букет белых пионов и эвкалипта<span class="kr">흰 작약과 유칼립투스 꽃다발</span></div>
+<div class="addr">Санкт-Петербург, наб. реки Мойки, 48<span class="kr">상트페테르부르크, 모이카 강변로 48</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">16</div>
+<div class="details">
+<div class="name">Наталья Фёдорова</div>
+<div class="order">Ландыши и белые ирисы<span class="kr">은방울꽃과 흰 아이리스</span></div>
+<div class="addr">Санкт-Петербург, Владимирский пр., 5<span class="kr">상트페테르부르크, 블라디미르스키 대로 5</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">29</div>
+<div class="details">
+<div class="name">Алексей Морозов</div>
+<div class="order">Пионы розовые, 11 шт.<span class="kr">분홍 작약 11송이</span></div>
+<div class="addr">Санкт-Петербург, Московский пр., 90<span class="kr">상트페테르부르크, 모스콥스키 대로 90</span></div>
+</div>
+</div>
+</div>
+<!-- Июнь -->
+<div class="month">
+<div class="month-label">June <span class="num">06</span></div>
+<div class="entry regular">
+<div class="date">05</div>
+<div class="details">
+<div class="name">Олеандр Карпов</div>
+<div class="order">Букет белых пионов и эвкалипта<span class="kr">흰 작약과 유칼립투스 꽃다발</span></div>
+<div class="addr">Санкт-Петербург, наб. реки Мойки, 48<span class="kr">상트페테르부르크, 모이카 강변로 48</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">10</div>
+<div class="details">
+<div class="name">Виктория Зайцева</div>
+<div class="order">Гортензии голубые<span class="kr">파란 수국</span></div>
+<div class="addr">Санкт-Петербург, Кирочная ул., 41<span class="kr">상트페테르부르크, 키로치나야 거리 41</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">24</div>
+<div class="details">
+<div class="name">Иван Петров</div>
+<div class="order">Полевой букет с лавандой<span class="kr">라벤더를 곁들인 들꽃 다발</span></div>
+<div class="addr">Санкт-Петербург, ул. Некрасова, 22<span class="kr">상트페테르부르크, 네크라소바 거리 22</span></div>
+</div>
+</div>
+</div>
+<!-- Июль -->
+<div class="month">
+<div class="month-label">July <span class="num">07</span></div>
+<div class="entry regular">
+<div class="date">05</div>
+<div class="details">
+<div class="name">Олеандр Карпов</div>
+<div class="order">Букет белых пионов и эвкалипта<span class="kr">흰 작약과 유칼립투스 꽃다발</span></div>
+<div class="addr">Санкт-Петербург, наб. реки Мойки, 48<span class="kr">상트페테르부르크, 모이카 강변로 48</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">14</div>
+<div class="details">
+<div class="name">Анастасия Волкова</div>
+<div class="order">Подсолнухи, 9 шт.<span class="kr">해바라기 9송이</span></div>
+<div class="addr">Санкт-Петербург, Каменноостровский пр., 15<span class="kr">상트페테르부르크, 카멘노스트롭스키 대로 15</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">30</div>
+<div class="details">
+<div class="name">Сергей Лебедев</div>
+<div class="order">Розы кремовые и зелень<span class="kr">크림색 장미와 그린 소재</span></div>
+<div class="addr">Санкт-Петербург, Загородный пр., 7<span class="kr">상트페테르부르크, 자고로드니 대로 7</span></div>
+</div>
+</div>
+</div>
+<!-- Август -->
+<div class="month">
+<div class="month-label">August <span class="num">08</span></div>
+<div class="entry regular">
+<div class="date">05</div>
+<div class="details">
+<div class="name">Олеандр Карпов</div>
+<div class="order">Букет белых пионов и эвкалипта<span class="kr">흰 작약과 유칼립투스 꽃다발</span></div>
+<div class="addr">Санкт-Петербург, наб. реки Мойки, 48<span class="kr">상트페테르부르크, 모이카 강변로 48</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">17</div>
+<div class="details">
+<div class="name">Мария Кузнецова</div>
+<div class="order">Астры и хризантемы<span class="kr">과꽃과 국화</span></div>
+<div class="addr">Санкт-Петербург, Литейный пр., 33<span class="kr">상트페테르부르크, 리테이니 대로 33</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">25</div>
+<div class="details">
+<div class="name">Павел Орлов</div>
+<div class="order">Эустомы, белые и сиреневые<span class="kr">흰색과 라일락색 유스토마</span></div>
+<div class="addr">Санкт-Петербург, ул. Рубинштейна, 2<span class="kr">상트페테르부르크, 루빈시테인 거리 2</span></div>
+</div>
+</div>
+</div>
+<!-- Сентябрь -->
+<div class="month">
+<div class="month-label">September <span class="num">09</span></div>
+<div class="entry regular">
+<div class="date">05</div>
+<div class="details">
+<div class="name">Олеандр Карпов</div>
+<div class="order">Букет белых пионов и эвкалипта<span class="kr">흰 작약과 유칼립투스 꽃다발</span></div>
+<div class="addr">Санкт-Петербург, наб. реки Мойки, 48<span class="kr">상트페테르부르크, 모이카 강변로 48</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">09</div>
+<div class="details">
+<div class="name">Екатерина Смирнова</div>
+<div class="order">Георгины бордовые<span class="kr">짙은 자주색 달리아</span></div>
+<div class="addr">Санкт-Петербург, Большой пр. П.С., 61<span class="kr">상트페테르부르크, 페트로그라드 지구 볼쇼이 대로 61</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">22</div>
+<div class="details">
+<div class="name">Артём Комаров</div>
+<div class="order">Букет из осенней зелени и роз<span class="kr">가을 그린 소재와 장미 꽃다발</span></div>
+<div class="addr">Санкт-Петербург, Английская наб., 12<span class="kr">상트페테르부르크, 영국인 강변로 12</span></div>
+</div>
+</div>
+</div>
+<!-- Октябрь -->
+<div class="month">
+<div class="month-label">October <span class="num">10</span></div>
+<div class="entry regular">
+<div class="date">05</div>
+<div class="details">
+<div class="name">Олеандр Карпов</div>
+<div class="order">Букет белых пионов и эвкалипта<span class="kr">흰 작약과 유칼립투스 꽃다발</span></div>
+<div class="addr">Санкт-Петербург, наб. реки Мойки, 48<span class="kr">상트페테르부르크, 모이카 강변로 48</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">13</div>
+<div class="details">
+<div class="name">Ольга Никитина</div>
+<div class="order">Хризантемы жёлтые, большой букет<span class="kr">노란 국화 큰 다발</span></div>
+<div class="addr">Санкт-Петербург, ул. Восстания, 18<span class="kr">상트페테르부르크, 보스스타니야 거리 18</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">28</div>
+<div class="details">
+<div class="name">Наталья Фёдорова</div>
+<div class="order">Розы бордовые, 7 шт.<span class="kr">짙은 자주색 장미 7송이</span></div>
+<div class="addr">Санкт-Петербург, Владимирский пр., 5<span class="kr">상트페테르부르크, 블라디미르스키 대로 5</span></div>
+</div>
+</div>
+</div>
+<!-- Ноябрь -->
+<div class="month">
+<div class="month-label">November <span class="num">11</span></div>
+<div class="entry regular">
+<div class="date">05</div>
+<div class="details">
+<div class="name">Олеандр Карпов</div>
+<div class="order">Букет белых пионов и эвкалипта<span class="kr">흰 작약과 유칼립투스 꽃다발</span></div>
+<div class="addr">Санкт-Петербург, наб. реки Мойки, 48<span class="kr">상트페테르부르크, 모이카 강변로 48</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">15</div>
+<div class="details">
+<div class="name">Иван Петров</div>
+<div class="order">Амариллис и зелень<span class="kr">아마릴리스와 그린 소재</span></div>
+<div class="addr">Санкт-Петербург, ул. Некрасова, 22<span class="kr">상트페테르부르크, 네크라소바 거리 22</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">26</div>
+<div class="details">
+<div class="name">Виктория Зайцева</div>
+<div class="order">Белые лилии, 5 шт.<span class="kr">흰 백합 5송이</span></div>
+<div class="addr">Санкт-Петербург, Кирочная ул., 41<span class="kr">상트페테르부르크, 키로치나야 거리 41</span></div>
+</div>
+</div>
+</div>
+<!-- Декабрь -->
+<div class="month">
+<div class="month-label">December <span class="num">12</span></div>
+<div class="entry regular">
+<div class="date">05</div>
+<div class="details">
+<div class="name">Олеандр Карпов</div>
+<div class="order">Букет белых пионов и эвкалипта<span class="kr">흰 작약과 유칼립투스 꽃다발</span></div>
+<div class="addr">Санкт-Петербург, наб. реки Мойки, 48<span class="kr">상트페테르부르크, 모이카 강변로 48</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">18</div>
+<div class="details">
+<div class="name">Дмитрий Соколов</div>
+<div class="order">Еловые ветви и белые розы<span class="kr">전나무 가지와 흰 장미</span></div>
+<div class="addr">Санкт-Петербург, ул. Марата, 9<span class="kr">상트페테르부르크, 마라타 거리 9</span></div>
+</div>
+</div>
+<div class="entry">
+<div class="date">31</div>
+<div class="details">
+<div class="name">Алексей Морозов</div>
+<div class="order">Зимний букет: гвоздики и ель<span class="kr">겨울 꽃다발: 카네이션과 전나무</span></div>
+<div class="addr">Санкт-Петербург, Московский пр., 90<span class="kr">상트페테르부르크, 모스콥스키 대로 90</span></div>
+</div>
+</div>
+</div>
+<footer class="close">— конец записей за год —<span class="kr">— 한 해의 기록 끝 —</span></footer>
+<div class="sticky-wrap">
+<div class="sticky">
+<div class="tape"></div>
+올레안드르 씨, 당신의 꽃은 배송되었어요.
+
+이번에 편지지가 새로 들어왔는데 매일 보내는 그 분에게 하나 써 보는 건 어때요?
+<span class="sign">- 꽃집 주인</span>
+</div>
+</div>
+</div>
+</body>
+</html>
